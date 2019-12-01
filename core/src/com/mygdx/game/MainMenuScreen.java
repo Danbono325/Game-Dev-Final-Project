@@ -7,11 +7,14 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.mygdx.game.XtremeTicTacToe;
 
 public class MainMenuScreen implements Screen {
     final XtremeTicTacToe game;
     Texture x;
+    Texture instructions;
+    Texture play;
     OrthographicCamera camera;
     Sound click;
     Music menuMusic;
@@ -26,6 +29,12 @@ public class MainMenuScreen implements Screen {
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuMusic.mp3"));
         menuMusic.setLooping(true);
+
+        //instructions button
+        instructions = new Texture(Gdx.files.internal("instructions.png"));
+
+        //play button
+        play = new Texture(Gdx.files.internal("play.png"));
     }
 
     public void render(float delta) {
@@ -36,22 +45,23 @@ public class MainMenuScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
 
+        menuMusic.play();
+
         //logo
-        this.game.batch.draw(x, 235, 405);
+        this.game.batch.draw(x, 235, 455);
 
         //setScale changes font size, setting font color to black
         this.game.font.getData().setScale(3,3);
         this.game.font.setColor(Color.BLACK);
-
         //game title
-        this.game.font.draw(this.game.batch, "Xtreme Tic-Tac-Toe", 230.0F, 780.0F);
+        this.game.font.draw(this.game.batch, "Xtreme Tic-Tac-Toe", 230.0F, 455.0F);
 
-        //how to play button
-        this.game.font.getData().setScale(2,2);
-        this.game.font.draw(this.game.batch, "How to Play", 100, 300);
+        //instructions button
+        this.game.batch.draw(instructions, 247, 250);
 
-        //two player button
-        this.game.font.draw(this.game.batch, "Two Player", 585, 300);
+        //play button
+        this.game.batch.draw(play, 330, 160);
+
         this.game.batch.end();
     }
 

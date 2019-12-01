@@ -43,6 +43,8 @@ public class HowToPlayScreen implements Screen {
         this.camera.update();
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
+
+        menuMusic.play();
     }
 
     public void resize(int width, int height) {
