@@ -14,6 +14,10 @@ public class HowToPlayScreen implements Screen {
     OrthographicCamera camera;
     Sound click;
     Music menuMusic;
+    Texture arrow;
+    Texture board;
+    Texture o;
+    Texture x;
 
     public HowToPlayScreen(XtremeTicTacToe gam) {
         this.game = gam;
@@ -24,6 +28,12 @@ public class HowToPlayScreen implements Screen {
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
         menuMusic = Gdx.audio.newMusic(Gdx.files.internal("menuMusic.mp3"));
         menuMusic.setLooping(true);
+
+        //sets all textures
+        arrow = new Texture(Gdx.files.internal("arrow.png"));
+        board = new Texture(Gdx.files.internal("board.png"));
+        x = new Texture(Gdx.files.internal("x.png"));
+        o = new Texture(Gdx.files.internal("o.png"));
     }
 
     public void render(float delta) {
