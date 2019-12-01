@@ -44,11 +44,6 @@ public class MainMenuScreen implements Screen {
         //two player button
         this.game.font.draw(this.game.batch, "Two Player", 585, 300);
         this.game.batch.end();
-
-        if (Gdx.input.isTouched()) {
-            this.game.setScreen(new GameScreen(this.game));
-            this.dispose();
-        }
     }
 
     public void resize(int width, int height) {
