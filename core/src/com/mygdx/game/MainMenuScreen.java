@@ -1,5 +1,6 @@
 package com.mygdx.game;
 
+import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Music;
@@ -7,10 +8,10 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
-import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
-public class MainMenuScreen implements Screen {
+public class MainMenuScreen implements Screen{
     final XtremeTicTacToe game;
     Texture x;
     Texture instructions;
@@ -19,6 +20,7 @@ public class MainMenuScreen implements Screen {
     Sound click;
     Music menuMusic;
 
+    public void create(){}
     public MainMenuScreen(XtremeTicTacToe gam) {
         this.game = gam;
         x = new Texture(Gdx.files.internal("xtreme.jpeg"));
@@ -45,6 +47,7 @@ public class MainMenuScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
 
+        //plays the menu music
         menuMusic.play();
 
         //logo
@@ -63,6 +66,27 @@ public class MainMenuScreen implements Screen {
         this.game.batch.draw(play, 330, 160);
 
         this.game.batch.end();
+
+        //handles button click events
+        int instWidth = instructions.getWidth();
+        int instHeight = instructions.getHeight();
+        int playWidth = play.getWidth();
+        int playHeight = play.getHeight();
+        int instNum = 400 - instWidth/2;
+        int playNum = 400 - playWidth/2;
+
+        boolean instruct = false;
+        if(Gdx.input.isTouched()){
+            Vector3 touchpos = new Vector3();
+            if(touchpos.x < instNum + instWidth && touchpos.x > instNum &&
+                400 - touchpos.y < 250 + instHeight && 800 - touchpos.y > instHeight){
+                instruct = true;
+            }
+        }
+//        if(instruct == true){
+//            this.setScreen(new HowToPlayScreen(this));
+//        }
+
     }
 
     public void resize(int width, int height) {

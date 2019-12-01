@@ -44,6 +44,7 @@ public class HowToPlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
 
+        //plays music
         menuMusic.play();
     }
 
