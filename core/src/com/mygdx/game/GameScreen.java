@@ -25,7 +25,7 @@ public class GameScreen implements Screen {
 
         //sets sounds for clicking and when x and o plays
         //sets background music to loop
-       // xSound = Gdx.audio.newSound(Gdx.files.internal("x.wav"));
+        xSound = Gdx.audio.newSound(Gdx.files.internal("x.mp3"));
         oSound = Gdx.audio.newSound(Gdx.files.internal("o.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
         gameMusic = Gdx.audio.newMusic(Gdx.files.internal("gameMusic.mp3"));
