@@ -67,26 +67,24 @@ public class MainMenuScreen implements Screen{
 
         this.game.batch.end();
 
-        //handles button click events
-        int instWidth = instructions.getWidth();
-        int instHeight = instructions.getHeight();
-        int playWidth = play.getWidth();
-        int playHeight = play.getHeight();
-        int instNum = 400 - instWidth/2;
-        int playNum = 400 - playWidth/2;
-
-        boolean instruct = false;
-        if(Gdx.input.isTouched()){
+        boolean instruct = false, pl = false;
+        if(Gdx.input.isTouched()) {
             Vector3 touchpos = new Vector3();
-            if(touchpos.x < instNum + instWidth && touchpos.x > instNum &&
-                400 - touchpos.y < 250 + instHeight && 800 - touchpos.y > instHeight){
+            touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
+            if (touchpos.x > 200.0F && touchpos.x < 130.0F + instructions.getWidth() && touchpos.y < 328.0F && touchpos.y > 308.0F) {
                 instruct = true;
             }
+            else if(touchpos.x < 390.0F && touchpos.x > 270.0F && touchpos.y < 340.0F && touchpos.y > 375.0F){
+                pl = true;
+            }
         }
-//        if(instruct == true){
-//            this.setScreen(new HowToPlayScreen(this));
-//        }
 
+        if(instruct){
+            this.game.setScreen(new HowToPlayScreen(this.game));
+        }
+        if(pl){
+            this.game.setScreen(new HowToPlayScreen(this.game));
+        }
     }
 
     public void resize(int width, int height) {
@@ -105,6 +103,8 @@ public class MainMenuScreen implements Screen{
     }
 
     public void dispose() {
+        instructions.dispose();
+        play.dispose();
         x.dispose();
         click.dispose();
         menuMusic.dispose();

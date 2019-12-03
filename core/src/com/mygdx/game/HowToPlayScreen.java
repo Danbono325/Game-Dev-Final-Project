@@ -7,6 +7,7 @@ import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
 public class HowToPlayScreen implements Screen {
@@ -44,8 +45,15 @@ public class HowToPlayScreen implements Screen {
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
 
+        //setScale changes font size, setting font color to black
+        this.game.font.getData().setScale(3,3);
+        this.game.font.setColor(Color.BLACK);
+        //game title
+        this.game.font.draw(this.game.batch, "How to Play", 230.0F, 455.0F);
         //plays music
         menuMusic.play();
+        this.game.batch.end();
+
     }
 
     public void resize(int width, int height) {
@@ -64,5 +72,11 @@ public class HowToPlayScreen implements Screen {
     }
 
     public void dispose() {
+        arrow.dispose();
+        board.dispose();
+        x.dispose();
+        o.dispose();
+        menuMusic.dispose();
+        click.dispose();
     }
 }
