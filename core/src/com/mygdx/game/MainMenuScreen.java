@@ -74,7 +74,7 @@ public class MainMenuScreen implements Screen{
             if (touchpos.x > 200.0F && touchpos.x < 130.0F + instructions.getWidth() && touchpos.y < 328.0F && touchpos.y > 308.0F) {
                 instruct = true;
             }
-            else if(touchpos.x < 390.0F && touchpos.x > 270.0F && touchpos.y < 340.0F && touchpos.y > 375.0F){
+            else if(touchpos.x < 390.0F && touchpos.x > 270.0F && touchpos.y > 340.0F && touchpos.y < 375.0F){
                 pl = true;
             }
         }
@@ -83,7 +83,7 @@ public class MainMenuScreen implements Screen{
             this.game.setScreen(new HowToPlayScreen(this.game));
         }
         if(pl){
-            this.game.setScreen(new HowToPlayScreen(this.game));
+            this.game.setScreen(new GameScreen(this.game));
         }
     }
 
