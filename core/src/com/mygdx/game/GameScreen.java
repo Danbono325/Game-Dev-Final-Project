@@ -16,7 +16,6 @@ public class GameScreen implements Screen {
     Sound xSound;
     Sound oSound;
     Sound click;
-    Music gameMusic;
 
     public GameScreen(XtremeTicTacToe gam) {
         this.game = gam;
@@ -28,8 +27,6 @@ public class GameScreen implements Screen {
         xSound = Gdx.audio.newSound(Gdx.files.internal("x.mp3"));
         oSound = Gdx.audio.newSound(Gdx.files.internal("o.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
-        gameMusic = Gdx.audio.newMusic(Gdx.files.internal("gameMusic.mp3"));
-        gameMusic.setLooping(true);
     }
 
     public void render(float delta) {
@@ -46,11 +43,11 @@ public class GameScreen implements Screen {
         //game title
         this.game.font.draw(this.game.batch, "Game Screen", 230.0F, 455.0F);
 
-        gameMusic.play();
-
         this.game.batch.end();
 
-
+        if(Gdx.input.isTouched()){
+            click.play();
+        }
     }
 
     public void resize(int width, int height) {
@@ -72,6 +69,5 @@ public class GameScreen implements Screen {
         xSound.dispose();
         oSound.dispose();
         click.dispose();
-        gameMusic.dispose();
     }
 }

@@ -68,6 +68,7 @@ public class MainMenuScreen implements Screen{
         this.game.batch.end();
 
         if(Gdx.input.isTouched()) {
+            click.play();
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
             if (touchpos.x > 200.0F && touchpos.x < 130.0F + instructions.getWidth() && touchpos.y < 328.0F && touchpos.y > 308.0F) {
