@@ -16,7 +16,10 @@ public class HowToPlayScreen implements Screen {
     Sound click;
     Music menuMusic;
     Texture arrow;
-    Texture board;
+    Texture backArrow;
+    Texture emptyBoard;
+    Texture instBoard;
+    Texture instLocalBoard;
     Texture o;
     Texture x;
 
@@ -32,7 +35,8 @@ public class HowToPlayScreen implements Screen {
 
         //sets all textures
         arrow = new Texture(Gdx.files.internal("arrow.png"));
-        board = new Texture(Gdx.files.internal("board.png"));
+        emptyBoard = new Texture (Gdx.files.internal("emptyBoard.png"));
+        backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
         x = new Texture(Gdx.files.internal("x.png"));
         o = new Texture(Gdx.files.internal("o.png"));
     }
@@ -49,7 +53,10 @@ public class HowToPlayScreen implements Screen {
         this.game.font.getData().setScale(3,3);
         this.game.font.setColor(Color.BLACK);
         //game title
-        this.game.font.draw(this.game.batch, "How to Play", 230.0F, 455.0F);
+        this.game.font.draw(this.game.batch, "How to Play", 277.0F, 780.0F);
+        this.game.batch.draw(arrow, 740, 30);
+        this.game.batch.draw(backArrow, 15, 30);
+        this.game.batch.draw(emptyBoard, 180, 30);
         //plays music
         menuMusic.play();
         this.game.batch.end();
@@ -73,7 +80,7 @@ public class HowToPlayScreen implements Screen {
 
     public void dispose() {
         arrow.dispose();
-        board.dispose();
+        emptyBoard.dispose();
         x.dispose();
         o.dispose();
         menuMusic.dispose();
