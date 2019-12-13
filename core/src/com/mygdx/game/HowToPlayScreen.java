@@ -61,6 +61,17 @@ public class HowToPlayScreen implements Screen {
         menuMusic.play();
         this.game.batch.end();
 
+        if(Gdx.input.isTouched()){
+            click.play();
+            Vector3 touchpos = new Vector3();
+            touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
+            if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
+                this.game.setScreen(new MainMenuScreen(this.game));
+            }
+            if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
+                //this.game.setScreen(new HowToPlayScreen2(this.game));
+            }
+        }
     }
 
     public void resize(int width, int height) {
