@@ -10,7 +10,7 @@ import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
-public class HowToPlayScreen implements Screen {
+public class HowToPlayScreen2 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
@@ -18,8 +18,10 @@ public class HowToPlayScreen implements Screen {
     Texture arrow;
     Texture backArrow;
     Texture emptyBoard;
+    Texture o;
+    Texture x;
 
-    public HowToPlayScreen(XtremeTicTacToe gam) {
+    public HowToPlayScreen2(XtremeTicTacToe gam) {
         this.game = gam;
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800.0F, 800.0F);
@@ -33,6 +35,8 @@ public class HowToPlayScreen implements Screen {
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         emptyBoard = new Texture (Gdx.files.internal("emptyBoard.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
+        x = new Texture(Gdx.files.internal("x.png"));
+        o = new Texture(Gdx.files.internal("o.png"));
     }
 
     public void render(float delta) {
@@ -47,7 +51,6 @@ public class HowToPlayScreen implements Screen {
         this.game.font.getData().setScale(3,3);
         this.game.font.setColor(Color.BLACK);
 
-        this.game.font.draw(this.game.batch, "How to Play", 277.0F, 780.0F);
         this.game.font.draw(this.game.batch, "In a game of Xtreme TicTacToe, \nyou have 9 regular games that \ncombined makes a single game", 95.0F , 700.0F);
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
@@ -60,12 +63,11 @@ public class HowToPlayScreen implements Screen {
             click.play();
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
-            System.out.println("x  " + touchpos.x + "    y  " + touchpos.y);
             if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
-                this.game.setScreen(new MainMenuScreen(this.game));
+                this.game.setScreen(new HowToPlayScreen(this.game));
             }
             if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
-                this.game.setScreen(new HowToPlayScreen2(this.game));
+                //this.game.setScreen(new HowToPlayScreen2(this.game));
             }
         }
     }
@@ -88,6 +90,8 @@ public class HowToPlayScreen implements Screen {
     public void dispose() {
         arrow.dispose();
         emptyBoard.dispose();
+        x.dispose();
+        o.dispose();
         menuMusic.dispose();
         click.dispose();
     }
