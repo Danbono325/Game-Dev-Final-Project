@@ -11,12 +11,15 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
-public class HowToPlayScreen implements Screen {
+public class HowToPlayScreen3 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
     Texture arrow;
     Texture backArrow;
+    Texture x;
+    Sprite xSprite;
+
     SpriteBatch spriteBatch;
     Texture global;
     Sprite globalSprite;
@@ -30,10 +33,9 @@ public class HowToPlayScreen implements Screen {
     Sprite bottomLeft;
     Sprite bottomMiddle;
     Sprite bottomRight;
-
     boolean drawBoard = true;
 
-    public HowToPlayScreen(XtremeTicTacToe gam) {
+    public HowToPlayScreen3(XtremeTicTacToe gam) {
         spriteBatch = new SpriteBatch();
         this.game = gam;
         this.camera = new OrthographicCamera();
@@ -45,7 +47,8 @@ public class HowToPlayScreen implements Screen {
         //sets all textures
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
-
+        x = new Texture(Gdx.files.internal("x.png"));
+        xSprite = new Sprite(x);
 
         //sets up the board
         global = new Texture(Gdx.files.internal("tictactoeGlobal.png"));
@@ -88,6 +91,9 @@ public class HowToPlayScreen implements Screen {
         bottomRight = new Sprite(global);
         bottomRight.setPosition(-10.0f, -330.0f);
         bottomRight.setScale( .14f, .14f);
+
+        xSprite.setPosition(175.0f, -45.0f);
+        xSprite.setScale(.13f, .13f);
     }
 
     public void render(float delta) {
@@ -102,13 +108,14 @@ public class HowToPlayScreen implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
-        this.game.font.draw(this.game.batch, "How to Play", 350.0F, 780.0F);
-        this.game.font.draw(this.game.batch, "In a game of Xtreme TicTacToe, \nyou have 9 regular games that \ncombined makes a single game", 230.0F , 700.0F);
+        this.game.font.draw(this.game.batch, "X goes first and is able to move anywhere on the board", 65.0F , 700.0F);
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
+        this.game.batch.end();
 
         spriteBatch.begin();
         if (drawBoard) {
+            xSprite.draw(spriteBatch);
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
             topMiddle.draw(spriteBatch);
@@ -122,17 +129,15 @@ public class HowToPlayScreen implements Screen {
         }
         spriteBatch.end();
 
-        this.game.batch.end();
-
         if(Gdx.input.isTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
             if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
-                this.game.setScreen(new MainMenuScreen(this.game));
+                this.game.setScreen(new HowToPlayScreen(this.game));
             }
             if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
-                this.game.setScreen(new HowToPlayScreen2(this.game));
+                //this.game.setScreen(new HowToPlayScreen3(this.game));
             }
         }
     }
@@ -154,6 +159,7 @@ public class HowToPlayScreen implements Screen {
 
     public void dispose() {
         arrow.dispose();
+        x.dispose();
         click.dispose();
     }
 }
