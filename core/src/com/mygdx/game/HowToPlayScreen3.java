@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
-public class HowToPlayScreen2 implements Screen {
+public class HowToPlayScreen3 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
@@ -35,7 +35,7 @@ public class HowToPlayScreen2 implements Screen {
     Sprite bottomRight;
     boolean drawBoard = true;
 
-    public HowToPlayScreen2(XtremeTicTacToe gam) {
+    public HowToPlayScreen3(XtremeTicTacToe gam) {
         spriteBatch = new SpriteBatch();
         this.game = gam;
         this.camera = new OrthographicCamera();
@@ -108,7 +108,7 @@ public class HowToPlayScreen2 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
-        this.game.font.draw(this.game.batch, "X goes first and is able to move anywhere on the board", 65.0F , 700.0F);
+        this.game.font.draw(this.game.batch, "X played in the top-left corner, so\nO must move in the top-left board", 180.0F , 760.0F);
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
@@ -118,14 +118,22 @@ public class HowToPlayScreen2 implements Screen {
             xSprite.draw(spriteBatch);
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
+            middle.setPackedColor(255);
             topMiddle.draw(spriteBatch);
+            topMiddle.setPackedColor(255);
             topLeft.draw(spriteBatch);
             topRight.draw(spriteBatch);
+            topRight.setPackedColor(255);
             middleRight.draw(spriteBatch);
+            middleRight.setPackedColor(255);
             middleLeft.draw(spriteBatch);
+            middleLeft.setPackedColor(255);
             bottomLeft.draw(spriteBatch);
+            bottomLeft.setPackedColor(255);
             bottomMiddle.draw(spriteBatch);
+            bottomMiddle.setPackedColor(255);
             bottomRight.draw(spriteBatch);
+            bottomRight.setPackedColor(255);
         }
         spriteBatch.end();
 
@@ -134,10 +142,10 @@ public class HowToPlayScreen2 implements Screen {
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
             if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
-                this.game.setScreen(new HowToPlayScreen(this.game));
+                this.game.setScreen(new HowToPlayScreen2(this.game));
             }
             if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
-                this.game.setScreen(new HowToPlayScreen3(this.game));
+                this.game.setScreen(new HowToPlayScreen4(this.game));
             }
         }
     }
