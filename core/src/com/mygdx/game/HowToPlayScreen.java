@@ -92,7 +92,7 @@ public class HowToPlayScreen implements Screen {
 
     public void render(float delta) {
         //white game screen
-        Gdx.gl.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+        Gdx.gl.glClearColor(0.0F, 1.0F, 0.0F, 1.0F);
         Gdx.gl.glClear(16384);
         this.camera.update();
         this.game.batch.setProjectionMatrix(this.camera.combined);
@@ -124,7 +124,7 @@ public class HowToPlayScreen implements Screen {
 
         this.game.batch.end();
 
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);

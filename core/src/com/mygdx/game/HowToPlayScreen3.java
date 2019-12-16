@@ -98,7 +98,7 @@ public class HowToPlayScreen3 implements Screen {
 
     public void render(float delta) {
         //white game screen
-        Gdx.gl.glClearColor(1.0F, 1.0F, 1.0F, 1.0F);
+        Gdx.gl.glClearColor(0.0F, 1.0F, 0.0F, 1.0F);
         Gdx.gl.glClear(16384);
         this.camera.update();
         this.game.batch.setProjectionMatrix(this.camera.combined);
@@ -108,7 +108,7 @@ public class HowToPlayScreen3 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
-        this.game.font.draw(this.game.batch, "X goes first and is able to move anywhere on the board", 65.0F , 700.0F);
+        this.game.font.draw(this.game.batch, "X played in the top-left corner, so\nO must move in the top-left board", 180.0F , 760.0F);
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
@@ -119,6 +119,7 @@ public class HowToPlayScreen3 implements Screen {
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
             topMiddle.draw(spriteBatch);
+            topLeft.setPackedColor(255);
             topLeft.draw(spriteBatch);
             topRight.draw(spriteBatch);
             middleRight.draw(spriteBatch);
@@ -129,15 +130,15 @@ public class HowToPlayScreen3 implements Screen {
         }
         spriteBatch.end();
 
-        if(Gdx.input.isTouched()){
+        if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
             if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
-                this.game.setScreen(new HowToPlayScreen(this.game));
+                this.game.setScreen(new HowToPlayScreen2(this.game));
             }
             if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
-                //this.game.setScreen(new HowToPlayScreen3(this.game));
+                this.game.setScreen(new HowToPlayScreen4(this.game));
             }
         }
     }
