@@ -1,17 +1,17 @@
 package com.mygdx.game;
 
 public class localBoard {
-    int xPosition;
-    int yPosition;
-    int height = 120;
-    int width = 125;
-    Square board[] = new Square[9];
-    State winner; //Has the board been won by player x player o or neither
-    boolean nextBoard;
+    private int xPosition;
+    private int yPosition;
+    private int height = 120;
+    private int width = 120;
+    private Square board[] = new Square[9];
+    private State winner; //Has the board been won by player x player o or neither
+    private boolean nextBoard;
 
     // Creates a local board object that has a position, an array of 9 squares, the state of each board,
     // and the status of the board which will help to restrict the boards the players can go in
-    public localBoard(int x, int y, Square[] b, State w, boolean status){
+    public localBoard(int x, int y, State w, boolean status){
         xPosition = x;
         yPosition = y;
         winner = w;
@@ -23,7 +23,7 @@ public class localBoard {
         return xPosition;
     }
 
-    //Returns the y poistion of the local board
+    //Returns the y position of the local board
     public int getYPosition() {
         return yPosition;
     }
@@ -46,7 +46,13 @@ public class localBoard {
         return board;
     }
 
+    // Returns the width of the local board
+    public int getWidth() { return width; }
 
+    // Returns the height of the local board
+    public int getHeight() { return height; }
+
+    // Sets the array of squares in the
     public void setSquares(Square[] x) {
         board = x;
     }
@@ -64,7 +70,8 @@ public class localBoard {
             this.winner = board[6].getState();
             return winner;
         }
-        else if(board[0].getState() == board[3].getState() && board[3].getState() == board[6].getState()) { //Columns
+        // Checking columns
+        else if(board[0].getState() == board[3].getState() && board[3].getState() == board[6].getState()) {
             this.winner = board[0].getState();
             return winner;
         }
@@ -75,8 +82,8 @@ public class localBoard {
         else if(board[2].getState() == board[5].getState() && board[5].getState() == board[8].getState()) {
             this.winner = board[2].getState();
             return winner;
-        }
-        else if(board[0].getState() == board[4].getState() && board[4].getState() == board[8].getState()) {//Diagonals
+        }// Checking Diagonals
+        else if(board[0].getState() == board[4].getState() && board[4].getState() == board[8].getState()) {
             this.winner = board[0].getState();
             return winner;
         }
