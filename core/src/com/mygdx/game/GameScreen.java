@@ -51,6 +51,11 @@ public class GameScreen implements Screen {
     Square[] previousSquares;
     int previousMoveIndex;
 
+    //Helps restrict where the user can click
+    localBoard nextLocalBoard;
+    Square[] currentSquares;
+
+
     // Determines whether it is X's turn or O's
     int turn = 0;
 
@@ -288,7 +293,7 @@ public class GameScreen implements Screen {
         this.game.batch.end();
 
         //When the mouse is clicked for the first time the first x is placed in its spot
-        if(Gdx.input.justTouched() && firstMove == true) { // First Move only
+        if(Gdx.input.justTouched() && firstMove) { // First Move only
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
             for (int i = 0; i < 9; i++) {
@@ -301,17 +306,67 @@ public class GameScreen implements Screen {
                     //System.out.println(previousSquares[2].getxPosition());
                     for(int j = 0; j < 9; j++){
                         if(touchpos.x > previousSquares[j].getxPosition() && touchpos.x < previousSquares[j].getxPosition() + previousSquares[j].getWidth() && touchpos.y > previousSquares[j].getyPosition() && touchpos.y < previousSquares[j].getyPosition() + previousSquares[j].getHeight()){
+                            previousSquares[j].setState(State.playerX);
                             previousMoveIndex = j;
+                            globalBoard[i].setSquares(previousSquares);
                             System.out.println(previousMoveIndex);
+                            nextLocalBoard = globalBoard[previousMoveIndex];
+                            nextLocalBoard.setStatus(true);
+                            currentSquares = nextLocalBoard.getSquares();
                         }
                     }
-                    firstMove = true;
+                    firstMove = false;
                     turn++;
                     break;
                 }
             }
         }
-
+        if(Gdx.input.justTouched() && !firstMove) {
+            Vector3 touchpos = new Vector3();
+            touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
+            if (touchpos.x > nextLocalBoard.getXPosition() && touchpos.x < nextLocalBoard.getXPosition() + nextLocalBoard.getWidth() && touchpos.y > nextLocalBoard.getYPosition() && touchpos.y < nextLocalBoard.getYPosition() + nextLocalBoard.getHeight() && nextLocalBoard.getStatus()) {
+                for (int j = 0; j < 9; j++) {
+                    if (touchpos.x > currentSquares[j].getxPosition() && touchpos.x < currentSquares[j].getxPosition() + currentSquares[j].getWidth() && touchpos.y > currentSquares[j].getyPosition() && touchpos.y < currentSquares[j].getyPosition() + currentSquares[j].getHeight()) {
+                        currentSquares = nextLocalBoard.getSquares();
+                        if (currentSquares[j].getState() == State.empty) {
+                            if(turn %2 ==0 ) {
+                                xSound.play();
+                                //Draw X Animation at current squares[j] position
+                                currentSquares[j].setState(State.playerX);
+                                globalBoard[previousMoveIndex].setSquares(currentSquares);
+                                turn++;
+                            }
+                            else {
+                                oSound.play();
+                                //Draw O animation at current squares[j]
+                                currentSquares[j].setState(State.playerO);
+                                globalBoard[previousMoveIndex].setSquares(currentSquares);
+                                turn++;
+                            }
+                            previousMoveIndex = j;
+                            nextLocalBoard = globalBoard[previousMoveIndex];
+                            currentSquares = nextLocalBoard.getSquares();
+                            //I think  i can move this code out of the for loop
+                            nextLocalBoard.checkWinner();
+                            if(nextLocalBoard.getWinner() == State.empty) { //Check next local board to make sure it doesnt have a winner else make everyboard not won valid
+                                nextLocalBoard.setStatus(true);
+                                currentSquares = nextLocalBoard.getSquares();
+                            }
+                            else {
+                                for(int i = 0; i < 9; i++) {
+                                    if(globalBoard[i].getWinner() == State.empty){
+                                        globalBoard[i].setStatus(true);
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        //TO DO: check for global winner change status wrap above if statement and check at the end maybe
+        // Animation
+        // For loop to check for winners at each local board and draw sprite in color of winner (X or O)
 
         spriteBatch.begin();
         if (drawBoard) {
@@ -335,50 +390,6 @@ public class GameScreen implements Screen {
 
     }
 
-    public void nextBoard()
-    {
-        // Determines the next board
-        switch (previousMoveIndex){
-
-            case (0):
-                //Set color of local board
-                //Restrict all boards except top left
-                //Find the next board
-                break;
-            case (1):
-                //Set color of local board
-                //Restrict all boards except top middle
-                break;
-            case (2):
-                //Set color of local board
-                //Restrict all boards except top right
-                break;
-            case (3):
-                //Set color of local board
-                //Restrict all boards except middle left
-                break;
-            case (4):
-                //Set color of local board
-                //Restrict all boards except center
-                break;
-            case (5):
-                //Set color of local board
-                //Restrict all boards except middle right
-                break;
-            case (6):
-                //Set color of local board
-                //Restrict all boards except bottom left
-                break;
-            case (7):
-                //Set color of local board
-                //Restrict all boards except bottom middle
-                break;
-            case (8):
-                //Set color of local board
-                //Restrict all boards except bottom right
-                break;
-        }
-    }
 
     public void resize(int width, int height) {
     }
