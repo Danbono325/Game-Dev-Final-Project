@@ -104,7 +104,7 @@ public class HowToPlayScreen4 implements Screen {
     }
 
     public void render(float delta) {
-        //white game screen
+        //green game screen
         Gdx.gl.glClearColor(0.0F, 1.0F, 0.0F, 1.0F);
         Gdx.gl.glClear(16384);
         this.camera.update();
@@ -126,15 +126,22 @@ public class HowToPlayScreen4 implements Screen {
             xSprite.draw(spriteBatch);
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
+            middle.setPackedColor(255);
             topMiddle.draw(spriteBatch);
+            topMiddle.setPackedColor(255);
             topLeft.draw(spriteBatch);
+            topLeft.setPackedColor(255);
             topRight.draw(spriteBatch);
+            topRight.setPackedColor(255);
             middleRight.draw(spriteBatch);
+            middleRight.setPackedColor(255);
             middleLeft.draw(spriteBatch);
+            middleLeft.setPackedColor(255);
             bottomLeft.draw(spriteBatch);
+            bottomLeft.setPackedColor(255);
             bottomMiddle.draw(spriteBatch);
+            bottomMiddle.setPackedColor(255);
             bottomRight.draw(spriteBatch);
-            bottomRight.setPackedColor(255);
         }
         spriteBatch.end();
 

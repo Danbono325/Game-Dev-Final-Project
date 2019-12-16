@@ -97,7 +97,7 @@ public class HowToPlayScreen2 implements Screen {
     }
 
     public void render(float delta) {
-        //white game screen
+        //green game screen
         Gdx.gl.glClearColor(0.0F, 1.0F, 0.0F, 1.0F);
         Gdx.gl.glClear(16384);
         this.camera.update();
