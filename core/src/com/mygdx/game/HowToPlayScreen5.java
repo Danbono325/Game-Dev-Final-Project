@@ -11,7 +11,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
-public class HowToPlayScreen4 implements Screen {
+public class HowToPlayScreen5 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
@@ -37,7 +37,7 @@ public class HowToPlayScreen4 implements Screen {
     Sprite bottomRight;
     boolean drawBoard = true;
 
-    public HowToPlayScreen4(XtremeTicTacToe gam) {
+    public HowToPlayScreen5(XtremeTicTacToe gam) {
         spriteBatch = new SpriteBatch();
         this.game = gam;
         this.camera = new OrthographicCamera();
@@ -115,7 +115,8 @@ public class HowToPlayScreen4 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
-        this.game.font.draw(this.game.batch, "O played in the bottom-right corner, so\nX must move in the bottom-right board", 160.0F , 760.0F);
+        this.game.font.draw(this.game.batch, "When a small board is won it can no longer be played\n       on. If a player is sent to a dead board, they\n" +
+                "                        can move anywhere", 80.0F , 760.0F);
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
@@ -143,10 +144,10 @@ public class HowToPlayScreen4 implements Screen {
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
             if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
-                this.game.setScreen(new HowToPlayScreen3(this.game));
+                this.game.setScreen(new HowToPlayScreen4(this.game));
             }
             if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
-                this.game.setScreen(new HowToPlayScreen5(this.game));
+                //this.game.setScreen(new HowToPlayScreen6(this.game));
             }
         }
     }
