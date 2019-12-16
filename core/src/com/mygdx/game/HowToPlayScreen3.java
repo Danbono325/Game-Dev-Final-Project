@@ -118,15 +118,22 @@ public class HowToPlayScreen3 implements Screen {
             xSprite.draw(spriteBatch);
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
+            middle.setPackedColor(255);
             topMiddle.draw(spriteBatch);
-            topLeft.setPackedColor(255);
+            topMiddle.setPackedColor(255);
             topLeft.draw(spriteBatch);
             topRight.draw(spriteBatch);
+            topRight.setPackedColor(255);
             middleRight.draw(spriteBatch);
+            middleRight.setPackedColor(255);
             middleLeft.draw(spriteBatch);
+            middleLeft.setPackedColor(255);
             bottomLeft.draw(spriteBatch);
+            bottomLeft.setPackedColor(255);
             bottomMiddle.draw(spriteBatch);
+            bottomMiddle.setPackedColor(255);
             bottomRight.draw(spriteBatch);
+            bottomRight.setPackedColor(255);
         }
         spriteBatch.end();
 
