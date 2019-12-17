@@ -432,6 +432,7 @@ public class GameScreen implements Screen {
         // Get sprites to actually show up in the squares they were clicked in
         // TEST
 
+        //draws boards
         spriteBatch.begin();
         if (drawBoard) {
             globalSprite.draw(spriteBatch);
