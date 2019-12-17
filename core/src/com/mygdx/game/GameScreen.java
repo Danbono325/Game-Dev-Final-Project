@@ -27,11 +27,12 @@ public class GameScreen implements Screen {
     Sound oSound;
     Sound click;
 
-    SpriteBatch spriteBatch;
+    SpriteBatch spriteBatch; // Used to draw the global and local sprites
     Texture global; // Texture used to draw the global and local boards
     Sprite globalSprite; // Sprite used to draw the global board
 
-    Sprite middle; // Sprites for the local boards
+    // Sprites for the local boards
+    Sprite middle;
     Sprite topLeft;
     Sprite topMiddle;
     Sprite topRight;
@@ -46,8 +47,9 @@ public class GameScreen implements Screen {
     boolean firstMove = true; // Helps with the first move
 
 
+    //Determines the winner of the game
     State globalWinner;
-    localBoard[] globalBoard = new localBoard[9];
+    localBoard[] globalBoard = new localBoard[9]; // The global board is an array of local board objects
 
     // Used to draw the strings to the screen
     String xString = ("X's turn");
@@ -91,6 +93,7 @@ public class GameScreen implements Screen {
     Texture X;
     Texture O;
 
+    // Used for the animation
     private float elapsedTime = 0;
 
     public GameScreen(XtremeTicTacToe gam) {
@@ -249,7 +252,7 @@ public class GameScreen implements Screen {
         bottomRightS[7] = new Square(458,440,7, State.empty);
         bottomRightS[8] = new Square(500,440,8, State.empty);
 
-        // Position and initialize the board of
+        // Position and initialize the global board
         globalBoard[0] = new localBoard(130,75, State.empty,true);
         globalBoard[1] = new localBoard(275,75, State.empty,true);
         globalBoard[2] = new localBoard(415,75, State.empty,true);
@@ -340,11 +343,11 @@ public class GameScreen implements Screen {
                 if (touchpos.x > globalBoard[i].getXPosition() && touchpos.x < globalBoard[i].getXPosition() + globalBoard[i].getWidth() && touchpos.y > globalBoard[i].getYPosition() && touchpos.y < globalBoard[i].getYPosition() + globalBoard[i].getHeight()) {
                     xSound.play();
                     previousLocalBoard = globalBoard[i];
-                    //System.out.println(previousLocalBoard.getXPosition());
+                    //System.out.println(previousLocalBoard.getXPosition()); -- Used for testing
                     previousSquares = previousLocalBoard.getSquares();
                     //this.game.batch.draw((TextureRegion)(xanimation.getKeyFrame(elapsedTime, true)), 150, 150);
                     drawXO = true;
-                    //System.out.println(previousSquares[2].getxPosition());
+                    //System.out.println(previousSquares[2].getxPosition()); -- Used for testing
                     for (int j = 0; j < 9; j++) {
                         if (touchpos.x > previousSquares[j].getxPosition() && touchpos.x < previousSquares[j].getxPosition() + previousSquares[j].getWidth() && touchpos.y > previousSquares[j].getyPosition() && touchpos.y < previousSquares[j].getyPosition() + previousSquares[j].getHeight()) {
                             previousSquares[j].setState(State.playerX);
@@ -352,11 +355,11 @@ public class GameScreen implements Screen {
                             //this.game.batch.draw((TextureRegion)(xanimation.getKeyFrame(elapsedTime, false)), previousSquares[j].getxPosition(), previousSquares[j].getyPosition());
                             //camera.unproject(touchpos);
                             //this.game.font.draw(this.game.batch, "X", previousSquares[j].getxPosition()+45, 735 - previousSquares[j].getyPosition());
-//                            Sprite temp = new Sprite(X);
-//                            temp.setPosition(touchpos.x,touchpos.y);
-//                            temp.setScale(1/5f);
-//                            listXO.add(temp);
-                            globalBoard[i].setSquares(previousSquares);
+                            Sprite temp = new Sprite(X);        // Creates an X sprite that stays on the board -- just in the wrong position
+                            temp.setPosition(touchpos.x,touchpos.y);
+                            temp.setScale(1/5f);
+                            listXO.add(temp);
+                            globalBoard[i].setSquares(previousSquares); // Sets the global board's local board with the altered squares
                             System.out.println(previousMoveIndex);
                             nextLocalBoard = globalBoard[j];
                             nextLocalBoard.setStatus(true);               // Sets the status as true for the first move
@@ -380,20 +383,20 @@ public class GameScreen implements Screen {
                                 if (turn % 2 == 0) {
                                     xSound.play();
                                     //Draw X Animation at current squares[j] position creat(x y)
-//                                    Sprite temp = new Sprite(X);        // Creates an X sprite that stays on the board
-//                                    temp.setPosition(touchpos.x,touchpos.y);
-//                                    temp.setScale(1/5f);
-//                                    listXO.add(temp);
+                                    Sprite temp = new Sprite(X);        // Creates an X sprite that stays on the board -- just in the wrong position
+                                    temp.setPosition(touchpos.x,touchpos.y);
+                                    temp.setScale(1/5f);
+                                    listXO.add(temp);
                                     currentSquares[j].setState(State.playerX);
                                     globalBoard[previousMoveIndex].setSquares(currentSquares);
                                     turn++;
                                 } else {
                                     oSound.play();
                                     //Draw O animation at current squares[j]
-//                                    Sprite temp = new Sprite(O);        // Creates an O sprite that stays on the board
-//                                    temp.setPosition(touchpos.x,touchpos.y);
-//                                    temp.setScale(1/5f);
-//                                    listXO.add(temp);
+                                    Sprite temp = new Sprite(O);        // Creates an O sprite that stays on the board -- just in the wrong position
+                                    temp.setPosition(touchpos.x,touchpos.y);
+                                    temp.setScale(1/7f);
+                                    listXO.add(temp);
                                     currentSquares[j].setState(State.playerO);
                                     globalBoard[previousMoveIndex].setSquares(currentSquares);
                                     turn++;
