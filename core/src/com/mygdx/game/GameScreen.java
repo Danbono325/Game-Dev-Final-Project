@@ -434,10 +434,6 @@ public class GameScreen implements Screen {
 
         spriteBatch.begin();
         if (drawBoard) {
-            // batch.draw(sprite, sprite.getX(), sprite.getY(),sprite.getOriginX(), sprite.getOriginY(),
-            //         sprite.getWidth(), sprite.getHeight(), sprite.getScaleX(), sprite.getScaleY(),
-            //        sprite.getRotation());
-            // or just do this
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
             topMiddle.draw(spriteBatch);
