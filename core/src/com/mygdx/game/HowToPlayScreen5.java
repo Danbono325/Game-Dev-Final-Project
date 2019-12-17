@@ -17,6 +17,8 @@ import com.mygdx.game.XtremeTicTacToe;
 public class HowToPlayScreen5 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
+
+    //sound for when arrows are clicked
     Sound click;
 
     //textures for arrows
@@ -121,6 +123,7 @@ public class HowToPlayScreen5 implements Screen {
         bottomRight.setPosition(-10.0f, -330.0f);
         bottomRight.setScale( .14f, .14f);
 
+        //sets x and o sprites
         xSprite.setPosition(175.0f, -45.0f);
         xSprite.setScale(.13f, .13f);
 
@@ -198,12 +201,19 @@ public class HowToPlayScreen5 implements Screen {
 
         //arrow functionality
         if(Gdx.input.justTouched()){
+            //plays noise when button is clicked
             click.play();
+
             Vector3 touchpos = new Vector3();
+
+            //sets vector values for touch position
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
+
+            //to see if back arrow was clicked
             if(touchpos.x < 50.0F && touchpos.x > 15.0F  && touchpos.y < 460.0F  && touchpos.y > 445.0F){
                 this.game.setScreen(new HowToPlayScreen4(this.game));
             }
+            //to see if forward arrow was clicked
             if(touchpos.x < 630.0F  && touchpos.x > 590.0F && touchpos.y < 460.0F && touchpos.y > 440.0F){
                 this.game.setScreen(new HowToPlayScreen6(this.game));
             }
