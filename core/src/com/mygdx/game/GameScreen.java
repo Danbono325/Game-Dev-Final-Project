@@ -18,7 +18,6 @@ public class GameScreen implements Screen {
     Sound xSound;
     Sound oSound;
     Sound click;
-    //Music gameMusic;
 
     SpriteBatch spriteBatch;
     Texture global;

@@ -11,16 +11,24 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
+//Hope Davis
+//Instructions for how game works
 public class HowToPlayScreen implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
+
+    //arrow textures
     Texture arrow;
     Texture backArrow;
+
     SpriteBatch spriteBatch;
+
+    //texture and sprite for global board
     Texture global;
     Sprite globalSprite;
 
+    //sprites for local boards
     Sprite middle;
     Sprite topLeft;
     Sprite topMiddle;
@@ -30,7 +38,6 @@ public class HowToPlayScreen implements Screen {
     Sprite bottomLeft;
     Sprite bottomMiddle;
     Sprite bottomRight;
-
     boolean drawBoard = true;
 
     public HowToPlayScreen(XtremeTicTacToe gam) {
@@ -39,20 +46,20 @@ public class HowToPlayScreen implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800.0F, 800.0F);
 
-        //set sounds and loop the music
+        //set sound
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
 
-        //sets all textures
+        //sets arrows
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
 
-
-        //sets up the board
+        //sets up global board
         global = new Texture(Gdx.files.internal("tictactoeGlobal.png"));
         globalSprite = new Sprite(global);
         globalSprite.setPosition(-125.0f, -220.0f);
         globalSprite.setScale( .48f, .48f);
 
+        //sets local boards
         middle = new Sprite(global);
         middle.setPosition(-125.0f, -220.0f);
         middle.setScale( .14f, .14f);
@@ -102,11 +109,15 @@ public class HowToPlayScreen implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
+        //draws instructions
         this.game.font.draw(this.game.batch, "How to Play", 350.0F, 780.0F);
         this.game.font.draw(this.game.batch, "In a game of Xtreme TicTacToe, \nyou have 9 regular games that \ncombined makes a single game", 230.0F , 700.0F);
+
+        //draws arrows
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
 
+        //draws board
         spriteBatch.begin();
         if (drawBoard) {
             globalSprite.draw(spriteBatch);
@@ -124,6 +135,7 @@ public class HowToPlayScreen implements Screen {
 
         this.game.batch.end();
 
+        //button functionality
         if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
@@ -154,6 +166,8 @@ public class HowToPlayScreen implements Screen {
 
     public void dispose() {
         arrow.dispose();
+        backArrow.dispose();
+        global.dispose();
         click.dispose();
     }
 }

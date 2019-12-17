@@ -11,19 +11,28 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
+//Hope Davis
+//Instructions - X moves first
 public class HowToPlayScreen2 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
+
+    //Textures for arrows
     Texture arrow;
     Texture backArrow;
+
+    //Texture and sprite for x
     Texture x;
     Sprite xSprite;
 
     SpriteBatch spriteBatch;
+
+    //Texture and sprite for global board
     Texture global;
     Sprite globalSprite;
 
+    //sprites for local board
     Sprite middle;
     Sprite topLeft;
     Sprite topMiddle;
@@ -41,21 +50,24 @@ public class HowToPlayScreen2 implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800.0F, 800.0F);
 
-        //set sounds and loop the music
+        //set sound
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
 
-        //sets all textures
+        //sets arrow textures
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
+
+        //sets x texture and sprite
         x = new Texture(Gdx.files.internal("x.png"));
         xSprite = new Sprite(x);
 
-        //sets up the board
+        //sets up global board
         global = new Texture(Gdx.files.internal("tictactoeGlobal.png"));
         globalSprite = new Sprite(global);
         globalSprite.setPosition(-125.0f, -220.0f);
         globalSprite.setScale( .48f, .48f);
 
+        //sets local boards
         middle = new Sprite(global);
         middle.setPosition(-125.0f, -220.0f);
         middle.setScale( .14f, .14f);
@@ -92,6 +104,7 @@ public class HowToPlayScreen2 implements Screen {
         bottomRight.setPosition(-10.0f, -330.0f);
         bottomRight.setScale( .14f, .14f);
 
+        //sets x sprite
         xSprite.setPosition(175.0f, -45.0f);
         xSprite.setScale(.13f, .13f);
     }
@@ -108,11 +121,15 @@ public class HowToPlayScreen2 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
+        //instructions
         this.game.font.draw(this.game.batch, "X goes first and is able to move anywhere on the board", 65.0F , 700.0F);
+
+        //draws arrows
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
 
+        //draws board
         spriteBatch.begin();
         if (drawBoard) {
             xSprite.draw(spriteBatch);
@@ -129,6 +146,7 @@ public class HowToPlayScreen2 implements Screen {
         }
         spriteBatch.end();
 
+        //arrow functionality
         if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
@@ -159,6 +177,8 @@ public class HowToPlayScreen2 implements Screen {
 
     public void dispose() {
         arrow.dispose();
+        global.dispose();
+        backArrow.dispose();
         x.dispose();
         click.dispose();
     }
