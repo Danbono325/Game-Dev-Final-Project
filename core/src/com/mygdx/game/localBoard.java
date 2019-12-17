@@ -56,38 +56,40 @@ public class localBoard {
     public void setSquares(Square[] x) {
         board = x;
     }
+
+    //Checks to see if a local board is won by checking the rows, columns and diagonals
     public State checkWinner(){
         //Checking rows
-        if(board[0].getState() == board[1].getState() && board[1].getState() == board[2].getState()){
+        if(board[0].getState() == board[1].getState() && board[1].getState() == board[2].getState() && board[0].getState() != State.empty){
             this.winner = board[0].getState();
             return winner;
         }
-        else if(board[3].getState() == board[4].getState() && board[4].getState() == board[5].getState()) {
+        else if(board[3].getState() == board[4].getState() && board[4].getState() == board[5].getState() && board[3].getState() != State.empty) {
             this.winner = board[3].getState();
             return winner;
         }
-        else if(board[6].getState() == board[7].getState() && board[7].getState() == board[8].getState()) {
+        else if(board[6].getState() == board[7].getState() && board[7].getState() == board[8].getState() && board[6].getState() != State.empty) {
             this.winner = board[6].getState();
             return winner;
         }
         // Checking columns
-        else if(board[0].getState() == board[3].getState() && board[3].getState() == board[6].getState()) {
+        else if(board[0].getState() == board[3].getState() && board[3].getState() == board[6].getState() && board[0].getState() != State.empty) {
             this.winner = board[0].getState();
             return winner;
         }
-        else if(board[1].getState() == board[4].getState() && board[4].getState() == board[7].getState()) {
+        else if(board[1].getState() == board[4].getState() && board[4].getState() == board[7].getState() && board[1].getState() != State.empty) {
             this.winner = board[1].getState();
             return winner;
         }
-        else if(board[2].getState() == board[5].getState() && board[5].getState() == board[8].getState()) {
+        else if(board[2].getState() == board[5].getState() && board[5].getState() == board[8].getState() && board[2].getState() != State.empty) {
             this.winner = board[2].getState();
             return winner;
         }// Checking Diagonals
-        else if(board[0].getState() == board[4].getState() && board[4].getState() == board[8].getState()) {
+        else if(board[0].getState() == board[4].getState() && board[4].getState() == board[8].getState() && board[0].getState() != State.empty) {
             this.winner = board[0].getState();
             return winner;
         }
-        else if(board[2].getState() == board[4].getState() && board[4].getState() == board[6].getState()) {
+        else if(board[2].getState() == board[4].getState() && board[4].getState() == board[6].getState() && board[2].getState() != State.empty) {
             this.winner = board[2].getState();
             return winner;
         }
