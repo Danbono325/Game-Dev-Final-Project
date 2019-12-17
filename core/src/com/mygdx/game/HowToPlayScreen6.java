@@ -12,27 +12,33 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
+//Hope Davis
+//Screen shows what a winning board will look like without X's and O's on the board
+
 public class HowToPlayScreen6 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
+
+    //Texture for arrows
     Texture arrow;
     Texture backArrow;
-    Texture x, x2, x3, x4;
-    Texture o, o2, o3, o4;
-    Sprite oSprite, o2Sprite, o3Sprite, o4Sprite;
-    Sprite xSprite, x2Sprite, x3Sprite, x4Sprite;
 
+    //X Scribble texture and sprites to signify a win in a local board for and X
     Texture xScrib;
     Sprite xScribble, x2Scribble, x3Scribble;
 
+    //O Scribble texture and sprites to signify a win in a local board for and O
     Texture oScrib;
     Sprite oScribble, o2Scribble;
 
     SpriteBatch spriteBatch;
+
+    //Global board texture and sprite
     Texture global;
     Sprite globalSprite;
 
+    //local board sprites
     Sprite middle;
     Sprite topLeft;
     Sprite topMiddle;
@@ -50,10 +56,10 @@ public class HowToPlayScreen6 implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800.0F, 800.0F);
 
-        //set sounds and loop the music
+        //set sounds
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
 
-        //sets all textures
+        //sets scribble textures, sprites, and arrows
         xScrib = new Texture(Gdx.files.internal("xscribble.png"));
         xScribble = new Sprite(xScrib);
         x2Scribble = new Sprite(xScrib);
@@ -63,22 +69,6 @@ public class HowToPlayScreen6 implements Screen {
         o2Scribble = new Sprite(oScrib);
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
-//        x = new Texture(Gdx.files.internal("x.png"));
-//        x2 = new Texture(Gdx.files.internal("x.png"));
-//        x3 = new Texture(Gdx.files.internal("x.png"));
-//        x4 = new Texture(Gdx.files.internal("x.png"));
-//        xSprite = new Sprite(x);
-//        x2Sprite = new Sprite(x2);
-//        x3Sprite = new Sprite(x3);
-//        x4Sprite = new Sprite(x4);
-//        o = new Texture(Gdx.files.internal("o.png"));
-//        o2 = new Texture(Gdx.files.internal("o.png"));
-//        o3 = new Texture(Gdx.files.internal("o.png"));
-//        o4 = new Texture(Gdx.files.internal("o.png"));
-//        oSprite = new Sprite(o);
-//        o2Sprite = new Sprite(o2);
-//        o3Sprite = new Sprite(o3);
-//        o4Sprite = new Sprite(o4);
 
         //sets up the board
         global = new Texture(Gdx.files.internal("tictactoeGlobal.png"));
@@ -122,45 +112,20 @@ public class HowToPlayScreen6 implements Screen {
         bottomRight.setPosition(-10.0f, -330.0f);
         bottomRight.setScale( .14f, .14f);
 
-//        xSprite.setPosition(175.0f, -45.0f);
-//        xSprite.setScale(.13f, .13f);
-//
-//        x2Sprite.setPosition(175.0f, -79.0f);
-//        x2Sprite.setScale(.13f, .13f);
-//
-//        x3Sprite.setPosition(175.0f, -109.0f);
-//        x3Sprite.setScale(.13f, .13f);
-//
-//        x4Sprite.setPosition(92.0f, 0.0f);
-//        x4Sprite.setScale(.13f, .13f);
-//
-//        oSprite.setPosition(20.0f, 0.0f);
-//        oSprite.setScale(.08f);
-//
-//        o2Sprite.setPosition(-15.0f, -155.0f);
-//        o2Sprite.setScale(.08f);
-//
-//        o3Sprite.setPosition(130.0f, -187.0f);
-//        o3Sprite.setScale(.08f);
-//
-//        o4Sprite.setPosition(245.0f, -187.0f);
-//        o4Sprite.setScale(.08f);
+        xScribble.setPosition(-400.0f, -690.0f);
+        xScribble.setScale(.065f, .065f);
 
+        x2Scribble.setPosition(-400.0f, -800.0f);
+        x2Scribble.setScale(.065f, .065f);
 
-          xScribble.setPosition(-400.0f, -690.0f);
-          xScribble.setScale(.065f, .065f);
+        x3Scribble.setPosition(-400.0f, -580.0f);
+        x3Scribble.setScale(.065f, .065f);
 
-          x2Scribble.setPosition(-400.0f, -800.0f);
-          x2Scribble.setScale(.065f, .065f);
+        oScribble.setPosition(-518.0f,-690.0f);
+        oScribble.setScale(.065f, .065f);
 
-          x3Scribble.setPosition(-400.0f, -580.0f);
-          x3Scribble.setScale(.065f, .065f);
-
-          oScribble.setPosition(-518.0f,-690.0f);
-          oScribble.setScale(.065f, .065f);
-
-          o2Scribble.setPosition(-625.0f, -800.0f);
-          o2Scribble.setScale(.065f, .065f);
+        o2Scribble.setPosition(-625.0f, -800.0f);
+        o2Scribble.setScale(.065f, .065f);
     }
 
     public void render(float delta) {
@@ -175,21 +140,15 @@ public class HowToPlayScreen6 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
+        //instructions and arrows
         this.game.font.draw(this.game.batch, "This continues until some gets three in a row\n            or no more moves can be made", 110.0f, 760.0f);
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
 
+        //draws sprites for board
         spriteBatch.begin();
         if (drawBoard) {
-//            oSprite.draw(spriteBatch);
-//            o2Sprite.draw(spriteBatch);
-//            o3Sprite.draw(spriteBatch);
-//            o4Sprite.draw(spriteBatch);
-//            xSprite.draw(spriteBatch);
-//            x2Sprite.draw(spriteBatch);
-//            x3Sprite.draw(spriteBatch);
-//            x4Sprite.draw(spriteBatch);
             xScribble.draw(spriteBatch);
             x2Scribble.draw(spriteBatch);
             x3Scribble.draw(spriteBatch);
@@ -208,6 +167,7 @@ public class HowToPlayScreen6 implements Screen {
         }
         spriteBatch.end();
 
+        //sets arrow functionality
         if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
@@ -237,8 +197,11 @@ public class HowToPlayScreen6 implements Screen {
     }
 
     public void dispose() {
+        xScrib.dispose();
+        oScrib.dispose();
+        backArrow.dispose();
+        global.dispose();
         arrow.dispose();
-        x.dispose();
         click.dispose();
     }
 }

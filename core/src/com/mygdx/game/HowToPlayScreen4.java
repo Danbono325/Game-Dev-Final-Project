@@ -11,21 +11,31 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
+//Hope Davis
+//Instructions for game play once O has moved
+
 public class HowToPlayScreen4 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
+
+    //Texture for arrows
     Texture arrow;
     Texture backArrow;
+
+    //Textures and sprites for x and o
     Texture x;
     Texture o;
     Sprite oSprite;
     Sprite xSprite;
 
     SpriteBatch spriteBatch;
+
+    //Texture and Sprite for global board
     Texture global;
     Sprite globalSprite;
 
+    //sprites for local boards
     Sprite middle;
     Sprite topLeft;
     Sprite topMiddle;
@@ -43,23 +53,26 @@ public class HowToPlayScreen4 implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800.0F, 800.0F);
 
-        //set sounds and loop the music
+        //set sound
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
 
-        //sets all textures
+        //sets arrow textures
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
+
+        //sets x and o textures and sprites
         x = new Texture(Gdx.files.internal("x.png"));
         xSprite = new Sprite(x);
         o = new Texture(Gdx.files.internal("o.png"));
         oSprite = new Sprite(o);
 
-        //sets up the board
+        //sets up global board
         global = new Texture(Gdx.files.internal("tictactoeGlobal.png"));
         globalSprite = new Sprite(global);
         globalSprite.setPosition(-125.0f, -220.0f);
         globalSprite.setScale( .48f, .48f);
 
+        //sets up local boards
         middle = new Sprite(global);
         middle.setPosition(-125.0f, -220.0f);
         middle.setScale( .14f, .14f);
@@ -96,9 +109,11 @@ public class HowToPlayScreen4 implements Screen {
         bottomRight.setPosition(-10.0f, -330.0f);
         bottomRight.setScale( .14f, .14f);
 
+        //sets x in position
         xSprite.setPosition(175.0f, -45.0f);
         xSprite.setScale(.13f, .13f);
 
+        //sets o in position
         oSprite.setPosition(20.0f, 0.0f);
         oSprite.setScale(.089f);
     }
@@ -115,11 +130,15 @@ public class HowToPlayScreen4 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
+        //instructions
         this.game.font.draw(this.game.batch, "O played in the bottom-right corner, so\nX must move in the bottom-right board", 160.0F , 760.0F);
+
+        //draws
         this.game.batch.draw(arrow, 740, 30);
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
 
+        //draws board with x and o
         spriteBatch.begin();
         if (drawBoard) {
             oSprite.draw(spriteBatch);
@@ -145,6 +164,7 @@ public class HowToPlayScreen4 implements Screen {
         }
         spriteBatch.end();
 
+        //button functionality
         if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
@@ -176,6 +196,9 @@ public class HowToPlayScreen4 implements Screen {
     public void dispose() {
         arrow.dispose();
         x.dispose();
+        o.dispose();
+        global.dispose();
+        backArrow.dispose();
         click.dispose();
     }
 }

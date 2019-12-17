@@ -11,19 +11,29 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 
+//Hope Davis
+//Instructions for after X moves and is O's turn
+
 public class HowToPlayScreen3 implements Screen {
     final XtremeTicTacToe game;
     OrthographicCamera camera;
     Sound click;
+
+    //Textures for arrows
     Texture arrow;
     Texture backArrow;
+
+    //Texture and sprite for x
     Texture x;
     Sprite xSprite;
 
     SpriteBatch spriteBatch;
+
+    //texture and sprite for global board
     Texture global;
     Sprite globalSprite;
 
+    //sprites for local boards
     Sprite middle;
     Sprite topLeft;
     Sprite topMiddle;
@@ -41,21 +51,24 @@ public class HowToPlayScreen3 implements Screen {
         this.camera = new OrthographicCamera();
         this.camera.setToOrtho(false, 800.0F, 800.0F);
 
-        //set sounds and loop the music
+        //set sound
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
 
-        //sets all textures
+        //arrow textures
         arrow = new Texture(Gdx.files.internal("arrow.png"));
         backArrow = new Texture(Gdx.files.internal("backArrow.jpg"));
+
+        //x texture
         x = new Texture(Gdx.files.internal("x.png"));
         xSprite = new Sprite(x);
 
-        //sets up the board
+        //sets up global board
         global = new Texture(Gdx.files.internal("tictactoeGlobal.png"));
         globalSprite = new Sprite(global);
         globalSprite.setPosition(-125.0f, -220.0f);
         globalSprite.setScale( .48f, .48f);
 
+        //sets local boards
         middle = new Sprite(global);
         middle.setPosition(-125.0f, -220.0f);
         middle.setScale( .14f, .14f);
@@ -92,6 +105,7 @@ public class HowToPlayScreen3 implements Screen {
         bottomRight.setPosition(-10.0f, -330.0f);
         bottomRight.setScale( .14f, .14f);
 
+        //sets x sprite
         xSprite.setPosition(175.0f, -45.0f);
         xSprite.setScale(.13f, .13f);
     }
@@ -108,17 +122,24 @@ public class HowToPlayScreen3 implements Screen {
         this.game.font.getData().setScale(2,2);
         this.game.font.setColor(Color.BLACK);
 
+        //instructions
         this.game.font.draw(this.game.batch, "X played in the top-left corner, so\nO must move in the top-left board", 180.0F , 760.0F);
         this.game.batch.draw(arrow, 740, 30);
+
+        //arrows
         this.game.batch.draw(backArrow, 15, 30);
         this.game.batch.end();
 
+        //sets board
         spriteBatch.begin();
         if (drawBoard) {
             xSprite.draw(spriteBatch);
             globalSprite.draw(spriteBatch);
             middle.draw(spriteBatch);
+
+            //use this to signify you can't move in this board
             middle.setPackedColor(255);
+
             topMiddle.draw(spriteBatch);
             topMiddle.setPackedColor(255);
             topLeft.draw(spriteBatch);
@@ -137,6 +158,7 @@ public class HowToPlayScreen3 implements Screen {
         }
         spriteBatch.end();
 
+        //button functionality
         if(Gdx.input.justTouched()){
             click.play();
             Vector3 touchpos = new Vector3();
@@ -168,6 +190,8 @@ public class HowToPlayScreen3 implements Screen {
     public void dispose() {
         arrow.dispose();
         x.dispose();
+        global.dispose();
+        backArrow.dispose();
         click.dispose();
     }
 }
