@@ -1,0 +1,97 @@
+
+OAnimation.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Oframe0
+  rotate: false
+  xy: 2, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe1
+  rotate: false
+  xy: 2, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe10
+  rotate: false
+  xy: 484, 2
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe11
+  rotate: false
+  xy: 484, 2
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe12
+  rotate: false
+  xy: 484, 2
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe2
+  rotate: false
+  xy: 484, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe3
+  rotate: false
+  xy: 2, 484
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe4
+  rotate: false
+  xy: 484, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe5
+  rotate: false
+  xy: 966, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe6
+  rotate: false
+  xy: 2, 2
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe7
+  rotate: false
+  xy: 484, 484
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe8
+  rotate: false
+  xy: 966, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Oframe9
+  rotate: false
+  xy: 1448, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1

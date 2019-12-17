@@ -18,7 +18,7 @@ public class Square {
         index = i;
         state = s;
     }
-    // Returns the x postion of the square
+    // Returns the x position of the square
     public int getxPosition() { return xPosition; }
     // Returns the y position of the square
     public int getyPosition() {

@@ -1,0 +1,97 @@
+
+XAnimation.png
+size: 2048,2048
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+Xframe0
+  rotate: false
+  xy: 2, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe1
+  rotate: false
+  xy: 2, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe10
+  rotate: false
+  xy: 484, 2
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe11
+  rotate: false
+  xy: 966, 484
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe12
+  rotate: false
+  xy: 1448, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe2
+  rotate: false
+  xy: 484, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe3
+  rotate: false
+  xy: 2, 484
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe4
+  rotate: false
+  xy: 484, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe5
+  rotate: false
+  xy: 966, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe6
+  rotate: false
+  xy: 2, 2
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe7
+  rotate: false
+  xy: 484, 484
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe8
+  rotate: false
+  xy: 966, 966
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1
+Xframe9
+  rotate: false
+  xy: 1448, 1448
+  size: 480, 480
+  orig: 480, 480
+  offset: 0, 0
+  index: -1

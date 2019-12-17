@@ -6,12 +6,19 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.OrthographicCamera;
+
+import java.util.ArrayList;
 import java.util.Arrays;
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Vector3;
 import com.mygdx.game.XtremeTicTacToe;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+
+// Here for animation - Chris
+import com.badlogic.gdx.graphics.g2d.Animation;
+import com.badlogic.gdx.graphics.g2d.TextureAtlas;
 
 public class GameScreen implements Screen {
     final XtremeTicTacToe game;
@@ -69,6 +76,22 @@ public class GameScreen implements Screen {
     Square[] bottomLeftS = new Square[9];
     Square[] bottomMiddleS = new Square[9];
     Square[] bottomRightS = new Square[9];
+
+    // Texture Atlas for x and o - Chris
+    private TextureAtlas xtextureAtlas;
+    private TextureAtlas otextureAtlas;
+
+    // Animation for x and o - Chris
+    private Animation xanimation;
+    private Animation oanimation;
+
+    //Sprite[] arrayXO = new Sprite[65];
+    ArrayList<Sprite> listXO = new ArrayList<Sprite>();
+    boolean drawXO = true;
+    Texture X;
+    Texture O;
+
+    private float elapsedTime = 0;
 
     public GameScreen(XtremeTicTacToe gam) {
         spriteBatch = new SpriteBatch();
@@ -249,10 +272,22 @@ public class GameScreen implements Screen {
         globalBoard[8].setSquares(bottomRightS);
 
 
-        //sets sounds for clicking and when x and o plays
+        // Sets sounds for clicking and when x and o plays
         xSound = Gdx.audio.newSound(Gdx.files.internal("x.mp3"));
         oSound = Gdx.audio.newSound(Gdx.files.internal("o.wav"));
         click = Gdx.audio.newSound(Gdx.files.internal("click.wav"));
+
+        // The texture atlas and the animation
+        xtextureAtlas = new TextureAtlas(Gdx.files.internal("Animations/XTexture/XAnimation.atlas"));
+        xanimation = new Animation(1/15f, xtextureAtlas.getRegions());
+
+        // The texture atlas and the animation
+        otextureAtlas = new TextureAtlas(Gdx.files.internal("Animations/OTexture/OAnimation.atlas"));
+        oanimation = new Animation(1/15f, otextureAtlas.getRegions());
+
+        // Textures for the X and O's sprites to be made
+        X = new Texture(Gdx.files.internal("x.png"));
+        O = new Texture(Gdx.files.internal("o.png"));
     }
 
     public void render(float delta) {
@@ -262,11 +297,11 @@ public class GameScreen implements Screen {
         this.camera.update();
         this.game.batch.setProjectionMatrix(this.camera.combined);
         this.game.batch.begin();
-
+        elapsedTime += Gdx.graphics.getDeltaTime();
         this.game.font.draw(this.game.batch, "Xtreme Tic Tac Toe", 200.0F, 780.0F);
 
         // While the game has not been won alternate between X and O diplay a message with whose turn it is
-        if(!(drawMsg)) {
+        if (!(drawMsg)) {
             if (turn % 2 == 0)
                 this.game.font.draw(this.game.batch, xString, 325.0F, 735.0F);
             else
@@ -274,99 +309,125 @@ public class GameScreen implements Screen {
         }
 
         // If a winner is determined the game will stop rendering whose turn it is and displays the winner and a message to go back to the home scrren
-        if(drawMsg) {
+        if (drawMsg) {
             if (globalWinner == State.playerX)
                 this.game.font.draw(this.game.batch, "X wins, press space to return to the main menu", 125.0F, 735.0F);
             else if (globalWinner == State.playerO)
                 this.game.font.draw(this.game.batch, "O wins, press space to return to the main menu", 125.0F, 735.0F);
             // Sends the user back to the main menu screen
-            if(Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
+            if (Gdx.input.isKeyPressed(Input.Keys.SPACE)) {
                 this.game.setScreen(new MainMenuScreen(this.game));
             }
         }
 
-        //setScale changes font size, setting font color to black
-        this.game.font.getData().setScale(3,3);
-        this.game.font.setColor(Color.BLACK);
-        //game title
+        if(drawXO) { // Draws the sprites -- this was used to get the sprites to actually stay on the board instead of flashing
+            for(int i = 0; i < listXO.size(); i++){
+                listXO.get(i).draw(this.game.batch);
+            }
+        }
 
-        this.game.batch.end();
+        //setScale changes font size, setting font color to black
+        this.game.font.getData().setScale(3, 3);
+        this.game.font.setColor(Color.BLACK);
+        //game title and turn
 
         //When the mouse is clicked for the first time the first x is placed in its spot
-        if(Gdx.input.justTouched() && firstMove) { // First Move only
+        if (Gdx.input.justTouched() && firstMove) { // First Move only
             Vector3 touchpos = new Vector3();
             touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
+            //camera.unproject(touchpos);
             for (int i = 0; i < 9; i++) {
                 if (touchpos.x > globalBoard[i].getXPosition() && touchpos.x < globalBoard[i].getXPosition() + globalBoard[i].getWidth() && touchpos.y > globalBoard[i].getYPosition() && touchpos.y < globalBoard[i].getYPosition() + globalBoard[i].getHeight()) {
                     xSound.play();
                     previousLocalBoard = globalBoard[i];
                     //System.out.println(previousLocalBoard.getXPosition());
                     previousSquares = previousLocalBoard.getSquares();
-                    // draw X animation at touch position
+                    //this.game.batch.draw((TextureRegion)(xanimation.getKeyFrame(elapsedTime, true)), 150, 150);
+                    drawXO = true;
                     //System.out.println(previousSquares[2].getxPosition());
-                    for(int j = 0; j < 9; j++){
-                        if(touchpos.x > previousSquares[j].getxPosition() && touchpos.x < previousSquares[j].getxPosition() + previousSquares[j].getWidth() && touchpos.y > previousSquares[j].getyPosition() && touchpos.y < previousSquares[j].getyPosition() + previousSquares[j].getHeight()){
+                    for (int j = 0; j < 9; j++) {
+                        if (touchpos.x > previousSquares[j].getxPosition() && touchpos.x < previousSquares[j].getxPosition() + previousSquares[j].getWidth() && touchpos.y > previousSquares[j].getyPosition() && touchpos.y < previousSquares[j].getyPosition() + previousSquares[j].getHeight()) {
                             previousSquares[j].setState(State.playerX);
                             previousMoveIndex = j;
+                            //this.game.batch.draw((TextureRegion)(xanimation.getKeyFrame(elapsedTime, false)), previousSquares[j].getxPosition(), previousSquares[j].getyPosition());
+                            //camera.unproject(touchpos);
+                            //this.game.font.draw(this.game.batch, "X", previousSquares[j].getxPosition()+45, 735 - previousSquares[j].getyPosition());
+//                            Sprite temp = new Sprite(X);
+//                            temp.setPosition(touchpos.x,touchpos.y);
+//                            temp.setScale(1/5f);
+//                            listXO.add(temp);
                             globalBoard[i].setSquares(previousSquares);
                             System.out.println(previousMoveIndex);
-                            nextLocalBoard = globalBoard[previousMoveIndex];
-                            nextLocalBoard.setStatus(true);
-                            currentSquares = nextLocalBoard.getSquares();
+                            nextLocalBoard = globalBoard[j];
+                            nextLocalBoard.setStatus(true);               // Sets the status as true for the first move
+                            currentSquares = nextLocalBoard.getSquares(); // Sets the new current squares
+                            firstMove = false;                            // First move is complete
+                            turn++;
+                            break;
                         }
                     }
-                    firstMove = false;
-                    turn++;
-                    break;
                 }
             }
         }
-        if(Gdx.input.justTouched() && !firstMove) {
-            Vector3 touchpos = new Vector3();
-            touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);
-            if (touchpos.x > nextLocalBoard.getXPosition() && touchpos.x < nextLocalBoard.getXPosition() + nextLocalBoard.getWidth() && touchpos.y > nextLocalBoard.getYPosition() && touchpos.y < nextLocalBoard.getYPosition() + nextLocalBoard.getHeight() && nextLocalBoard.getStatus()) {
-                for (int j = 0; j < 9; j++) {
-                    if (touchpos.x > currentSquares[j].getxPosition() && touchpos.x < currentSquares[j].getxPosition() + currentSquares[j].getWidth() && touchpos.y > currentSquares[j].getyPosition() && touchpos.y < currentSquares[j].getyPosition() + currentSquares[j].getHeight()) {
-                        currentSquares = nextLocalBoard.getSquares();
-                        if (currentSquares[j].getState() == State.empty) {
-                            if(turn %2 ==0 ) {
-                                xSound.play();
-                                //Draw X Animation at current squares[j] position
-                                currentSquares[j].setState(State.playerX);
-                                globalBoard[previousMoveIndex].setSquares(currentSquares);
-                                turn++;
-                            }
-                            else {
-                                oSound.play();
-                                //Draw O animation at current squares[j]
-                                currentSquares[j].setState(State.playerO);
-                                globalBoard[previousMoveIndex].setSquares(currentSquares);
-                                turn++;
-                            }
-                            previousMoveIndex = j;
-                            nextLocalBoard = globalBoard[previousMoveIndex];
-                            currentSquares = nextLocalBoard.getSquares();
-                            //I think  i can move this code out of the for loop
-                            nextLocalBoard.checkWinner();
-                            if(nextLocalBoard.getWinner() == State.empty) { //Check next local board to make sure it doesnt have a winner else make everyboard not won valid
-                                nextLocalBoard.setStatus(true);
+        if(globalWinner == State.empty){ //As long as there is not a winner keep checking mouse clicks
+            if (Gdx.input.justTouched() && !firstMove) {
+                Vector3 touchpos = new Vector3();
+                touchpos.set((float) Gdx.input.getX(), (float) Gdx.input.getY(), 0.0F);   //If touchpos is in a local board find the square it was clicked in
+                if (touchpos.x > nextLocalBoard.getXPosition() && touchpos.x < nextLocalBoard.getXPosition() + nextLocalBoard.getWidth() && touchpos.y > nextLocalBoard.getYPosition() && touchpos.y < nextLocalBoard.getYPosition() + nextLocalBoard.getHeight() && nextLocalBoard.getStatus()) {
+                    for (int j = 0; j < 9; j++) {
+                        if (touchpos.x > currentSquares[j].getxPosition() && touchpos.x < currentSquares[j].getxPosition() + currentSquares[j].getWidth() && touchpos.y > currentSquares[j].getyPosition() && touchpos.y < currentSquares[j].getyPosition() + currentSquares[j].getHeight()) {
+                            if (currentSquares[j].getState() == State.empty) {
+                                if (turn % 2 == 0) {
+                                    xSound.play();
+                                    //Draw X Animation at current squares[j] position creat(x y)
+//                                    Sprite temp = new Sprite(X);        // Creates an X sprite that stays on the board
+//                                    temp.setPosition(touchpos.x,touchpos.y);
+//                                    temp.setScale(1/5f);
+//                                    listXO.add(temp);
+                                    currentSquares[j].setState(State.playerX);
+                                    globalBoard[previousMoveIndex].setSquares(currentSquares);
+                                    turn++;
+                                } else {
+                                    oSound.play();
+                                    //Draw O animation at current squares[j]
+//                                    Sprite temp = new Sprite(O);        // Creates an O sprite that stays on the board
+//                                    temp.setPosition(touchpos.x,touchpos.y);
+//                                    temp.setScale(1/5f);
+//                                    listXO.add(temp);
+                                    currentSquares[j].setState(State.playerO);
+                                    globalBoard[previousMoveIndex].setSquares(currentSquares);
+                                    turn++;
+                                }
+                                previousMoveIndex = j;
+                                nextLocalBoard = globalBoard[previousMoveIndex];
                                 currentSquares = nextLocalBoard.getSquares();
                             }
-                            else {
-                                for(int i = 0; i < 9; i++) {
-                                    if(globalBoard[i].getWinner() == State.empty){
-                                        globalBoard[i].setStatus(true);
-                                    }
-                                }
-                            }
                         }
                     }
                 }
             }
         }
-        //TO DO: check for global winner change status wrap above if statement and check at the end maybe
+        if(nextLocalBoard != null) {                    //Null pointer exception was being thrown
+            nextLocalBoard.checkWinner();
+            if (nextLocalBoard.getWinner() == State.empty) {  //Check next local board to make sure it doesn't have a winner
+                nextLocalBoard.setStatus(true);
+                currentSquares = nextLocalBoard.getSquares(); // get the next boards squares
+            } else {
+                nextLocalBoard.setStatus(false);               // If it does have a winner set the status to false s it cant be played in anymore
+                for (int i = 0; i < 9; i++) {
+                    if (globalBoard[i].getWinner() == State.empty) {  // and make every board not won a board possible to play in
+                        globalBoard[i].setStatus(true);
+                    }
+                }
+            }
+        }
+        this.checkWinner();
+        this.game.batch.end();
+
+        //TO DO:
         // Animation
-        // For loop to check for winners at each local board and draw sprite in color of winner (X or O)
+        // Get sprites to actually show up in the squares they were clicked in
+        // TEST
 
         spriteBatch.begin();
         if (drawBoard) {
@@ -411,38 +472,40 @@ public class GameScreen implements Screen {
         oSound.dispose();
         click.dispose();
         global.dispose();
+        X.dispose();
+        O.dispose();
     }
     public void checkWinner(){
             // Top Row
-            if(globalBoard[0].getWinner() == globalBoard[1].getWinner() && globalBoard[1].getWinner() == globalBoard[2].getWinner()) {
+            if(globalBoard[0].getWinner() == globalBoard[1].getWinner() && globalBoard[1].getWinner() == globalBoard[2].getWinner() && globalBoard[0].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[0].getWinner();
                 drawMsg = true;
             } // Middle Row
-            else if(globalBoard[3].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[5].getWinner()) {
+            else if(globalBoard[3].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[5].getWinner() && globalBoard[3].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[3].getWinner();
                 drawMsg = true;
             } // Bottom Row
-            else if (globalBoard[6].getWinner() == globalBoard[7].getWinner() && globalBoard[7].getWinner() == globalBoard[8].getWinner()) {
+            else if (globalBoard[6].getWinner() == globalBoard[7].getWinner() && globalBoard[7].getWinner() == globalBoard[8].getWinner() && globalBoard[6].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[6].getWinner();
                 drawMsg = true;
             } // Left Column
-            else if (globalBoard[0].getWinner() == globalBoard[3].getWinner() && globalBoard[3].getWinner() == globalBoard[6].getWinner()) {
+            else if (globalBoard[0].getWinner() == globalBoard[3].getWinner() && globalBoard[3].getWinner() == globalBoard[6].getWinner() && globalBoard[0].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[0].getWinner();
                 drawMsg = true;
             } // Middle Column
-            else if (globalBoard[1].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[5].getWinner()) {
+            else if (globalBoard[1].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[5].getWinner() && globalBoard[1].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[1].getWinner();
                 drawMsg = true;
             } // Right Column
-            else if (globalBoard[2].getWinner() == globalBoard[5].getWinner() && globalBoard[5].getWinner() == globalBoard[8].getWinner()) {
+            else if (globalBoard[2].getWinner() == globalBoard[5].getWinner() && globalBoard[5].getWinner() == globalBoard[8].getWinner() && globalBoard[2].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[2].getWinner();
                 drawMsg = true;
             } // Diagonals
-            else if (globalBoard[0].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[8].getWinner()) {
+            else if (globalBoard[0].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[8].getWinner() && globalBoard[0].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[0].getWinner();
                 drawMsg = true;
             }
-            else if (globalBoard[3].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[6].getWinner()) {
+            else if (globalBoard[3].getWinner() == globalBoard[4].getWinner() && globalBoard[4].getWinner() == globalBoard[6].getWinner() && globalBoard[3].getWinner() != State.empty) {
                 this.globalWinner = globalBoard[3].getWinner();
                 drawMsg = true;
             }
